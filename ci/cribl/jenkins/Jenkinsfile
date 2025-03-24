@@ -1,0 +1,39 @@
+import groovy.transform.Field
+
+
+@Library('cribl-jenkins')_
+
+
+final String WORKSPACE_PATH = '/home/jenkins/agent/workspace'
+
+pipeline {
+  agent {
+    kubernetes {
+      cloud 'k8s-devops'
+      yamlFile 'ci/cribl/jenkins/podspec.yml'
+      customWorkspace WORKSPACE_PATH
+      workingDir WORKSPACE_PATH
+    }
+  }
+
+  options {
+    ansiColor('xterm')
+    buildDiscarder(logRotator(daysToKeepStr: '21'))
+    copyArtifactPermission("*")
+    disableRestartFromStage()
+  }
+
+  stages {
+    stage('Build ClickHouse') {
+      steps {
+        script {
+          sh "cmake -S . -B build "
+          sh "cmake --build build"
+          utils.s3Archive([
+            sourceFile: 'build/**/*'
+          ])
+        }
+      }
+    }
+  }
+}
