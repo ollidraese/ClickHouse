@@ -11,6 +11,7 @@ pipeline {
     kubernetes {
       cloud 'k8s-devops'
       yamlFile 'ci/cribl/jenkins/podspec.yml'
+      defaultContainer 'builder'
       customWorkspace WORKSPACE_PATH
       workingDir WORKSPACE_PATH
     }
