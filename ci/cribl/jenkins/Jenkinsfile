@@ -30,6 +30,7 @@ pipeline {
         script {
           // TODO: setup script?
           sh "git config --global --add safe.directory /home/jenkins/agent/workspace"
+          sh "git submodule update --init"
           sh "cmake -S . -B build "
           sh "cmake --build build"
           utils.s3Archive([
