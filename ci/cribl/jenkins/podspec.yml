@@ -10,7 +10,7 @@ metadata:
     cribl.io/arch: "arm64"
 spec:
   nodeSelector:
-    cribl.io/linux-workers-generic-arm: "true"
+    cribl.io/linux-workers-generic-arm-2xl: "true"
   containers:
     - name: builder
       image: clickhouse/binary-builder:c9ab730d9265dda4ddbc
@@ -26,8 +26,8 @@ spec:
           mountPath: /var/lib/docker
       resources:
         requests:
-          memory: "5120Mi"
-          cpu: "180m"
+          memory: "32Gi"
+          cpu: "8000m"
   imagePullSecrets:
   - name: regcred
   terminationGracePeriodSeconds: 0
