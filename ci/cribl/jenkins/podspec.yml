@@ -27,8 +27,7 @@ spec:
       resources:
         requests:
           memory: "28Gi"
-          cpu: "800m"
-          ephemeral-storage: "3Gi"
+          cpu: "7500m"
   imagePullSecrets:
   - name: regcred
   terminationGracePeriodSeconds: 0
