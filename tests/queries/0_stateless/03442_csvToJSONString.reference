@@ -1,0 +1,13 @@
+{"id":"Key1","name":"John","property":42}
+{"id":"Key2","name":"Bob","property":true}
+{"id":"Key3","name":"Alice","property":false}
+{"id":"Key4","name":"Charlie","property":"something"}
+{"id":"Key5","name":"Rudolf","property":17}
+{"id":"Key5","name":"Rudolf","property":"17"}
+{"name":"John","property":42}
+{"name":"Bob","property":true}
+{"id":"Key1","name":"John"}
+{"id":"Key2","name":"Bob"}
+{"id":"Key1","property":42}
+{"id":"Key2","property":true}
+{"id":"The,key,with,quotes","name":",;\'","property":"The value with,quotes"}

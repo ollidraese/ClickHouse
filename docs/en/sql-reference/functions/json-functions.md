@@ -1109,6 +1109,64 @@ Result:
 - [output_format_json_quote_denormals](/operations/settings/formats#output_format_json_quote_denormals)
 
 
+### csvToJSONString {#csvtojsonstring}
+
+Parses a CSV-formatted string into its separate fields and transforms it into a JSON string.
+The first parameter has to be a string constant/literal, describing the field names. The second
+parameter is the CSV string that should be parsed into its separate fields. The output then matches
+the field names to the parsed output fields.
+
+This function is useful if you have a [String](../data-types/string.md) column with still unparsed
+CSV data and need to extract its field at runtime. The output can be used in conjunction with the
+JSON functions to extract specific field information. Note, that this processing is more robust
+than simply splitting the string by the delimiting character as it considers these delimiters also
+within quoted strings.
+
+The third function parameter is optional and allows specification of key/value pairs to control 
+the CSV parsing. 
+
+
+**Syntax**
+
+```sql
+csvToJSONString(fieldNames, csvString)
+csvToJSONString(fieldNames, csvString, options)
+```
+
+**Arguments**
+
+- `fieldNames` — The field names (essentially CSV header) that should be merged into the JSON output. You can omit fields from the output by providing an empty field name at its position, like `field1,,field3` to omit `field2` in the output.
+- `csvString` - The name of the string column or literal that contains the CSV that should be parsed.
+- `options` - If provided, the (comma-separated) options are used to control the CSV parsing.
+
+***Supported options for third parameter***
+- `delimiter` - The delimiter character (default is `,`)
+- `quote` - Limit the quote character to either `"` or `'` (default is allowing both `"` and `'`)
+- `null` - The null representation (default is `\N`)
+- `autodetect_types` - Decides if booleans and numerics are automatically detected and stored as native type in JSON (default is `true`)
+
+**Returned value**
+
+- JSON representation of the CSV data. [String](../data-types/string.md).
+
+**Example**
+
+Query:
+
+```sql
+SELECT csvToJSONString('name,age', 'John,42');
+SELECT csvToJSONString('name|age', 'Clark|15', 'delimiter="|"');
+SELECT csvToJSONString('name,age,active', 'Bob,17,true', 'autodetect_types="false"');
+```
+
+Result:
+
+```text
+{"age":42,"name":"John"}
+{"age":15,"name":"Clark"}
+{"age":"17","name":"Bob","active":"true"}
+```
+
 ### JSONArrayLength {#jsonarraylength}
 
 Returns the number of elements in the outermost JSON array. The function returns NULL if input JSON string is invalid.
