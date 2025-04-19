@@ -1112,14 +1112,14 @@ Result:
 ### csvToJSONString {#csvtojsonstring}
 
 Parses a CSV-formatted string into its separate fields and transforms it into a JSON string.
-The first parameter has to be a string constant/literal, describing the field names. This is 
-essentially the content of a CSV header using the same formatting and separators as the actual
+The first parameter has to be a string constant/literal describing the field names. This is, 
+essentially, the content of a CSV header using the same formatting and separators as the actual
 data. The second parameter is the CSV string that should be parsed into its separate fields. 
 The output then matches the field names to the parsed output fields.
 
 This function is useful if you have a [String](../data-types/string.md) column with still unparsed
 CSV data and need to extract its fields at runtime. The output can be used in conjunction with the
-JSON functions to access specific field information. Note, that this processing is more robust
+JSON functions to access specific field information. Note that this processing is more robust
 than simply splitting the string by the delimiting character as it considers these delimiters also
 within quoted strings.
 
@@ -1134,14 +1134,14 @@ of this function.
 
 ```sql
 csvToJSONString(fieldNames, csvString)
-csvToJSONString(fieldNames, csvString, autodetect_types)
+csvToJSONString(fieldNames, csvString, detectTypes)
 ```
 
 **Arguments**
 
 - `fieldNames` — The field names (essentially CSV header) that should be merged into the JSON output. You can omit fields from the output by providing an empty field name at its position, like `field1,,field3` to omit `field2` in the output. This parameter has to be a non-nullable [String](../data-types/string.md) constant.
 - `csvString` - The name of the [String](../data-types/string.md) column or literal that contains the CSV that should be parsed. The column can be nullable.
-- `autodetect_types` - If provided and set to false, it suppresses the automatic conversion to native JSON types.
+- `detectTypes` - If provided and set to false, it suppresses the automatic conversion to native JSON types.
 
 **Returned value**
 
